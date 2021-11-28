@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>burussia dortmund</title>
+<link rel="shortcut icon" href="favicon.ico">
+<script>
+var bundesliga_table_load = false;
+</script>
+</head>
+<style>
+#table_container{
+	border-collapse: collapse;
+	text-align: center;
+	table-layout: fixed;
+}
+
+
+
+</style>
+<script>
+
+
+
+
+
+var bundesliga_json = [
+	{Name:'바이에른 뮌헨',Round : 13,Win : 10,Draw : 1, Lose : 2, Goal : 42, Loss : 13, Goal_Different : 29, Score : 31},
+	{Name:'보루시아 도르트문트',Round : 13,Win : 10,Draw : 0, Lose : 3, Goal : 33, Loss : 19, Goal_Different : 14, Score : 30},
+	{Name:'SC 프라이부르크',Round : 13,Win : 6,Draw : 4, Lose : 3, Goal : 19, Loss : 13, Goal_Different: 6, Score : 22},
+	{Name:'레버쿠젠',Round : 12,Win : 6,Draw : 3, Lose : 3, Goal : 25, Loss : 17, Goal_Different :8, Score : 21},
+	{Name:'우니온 베를린',Round : 12,Win : 5,Draw : 5, Lose : 2, Goal : 19, Loss : 17, Goal_Different :2, Score : 20},
+	{Name:'볼프스부르크',Round : 13,Win : 6,Draw : 2, Lose : 5, Goal : 15, Loss : 17, Goal_Different :-2, Score : 20},
+	{Name:'라이프치히',Round : 12,Win : 5,Draw : 3, Lose : 4, Goal : 23, Loss : 13, Goal_Different: 10, Score : 18},
+	{Name:'마인츠 05',Round : 13,Win : 5,Draw : 3, Lose : 5, Goal : 17, Loss : 14, Goal_Different: 3, Score : 18},
+	{Name:'묀헨글라트바흐',Round : 13,Win : 5,Draw : 3, Lose : 5, Goal : 18, Loss : 18, Goal_Different: 0, Score : 18},
+	{Name:'호펜하임',Round : 13,Win : 6,Draw : 2, Lose : 5, Goal : 27, Loss : 20, Goal_Different: 7, Score : 20},
+	{Name:'아인트라흐트',Round : 12,Win : 3,Draw : 6, Lose : 3, Goal : 14, Loss : 16, Goal_Different: -2, Score : 15},
+	{Name:'쾰른',Round : 13,Win : 4,Draw : 6, Lose : 3, Goal : 22, Loss : 22, Goal_Different: 0, Score : 18},
+	{Name:'보훔',Round : 12,Win : 5,Draw : 1, Lose : 7, Goal : 10, Loss : 19, Goal_Different: -9, Score : 16},
+	{Name:'헤르타 BSC',Round : 13,Win : 4,Draw : 2, Lose : 7, Goal : 13, Loss : 27, Goal_Different: -14, Score : 14},
+	{Name:'아우크스부르크',Round : 13,Win : 3,Draw : 4, Lose : 6, Goal : 12, Loss : 22, Goal_Different: -10, Score : 13},
+	{Name:'슈투트가르트',Round : 13,Win : 3,Draw : 4, Lose : 6, Goal : 18, Loss : 23, Goal_Different: -5, Score : 13},
+	{Name:'빌레펠트',Round : 13,Win : 1,Draw : 6, Lose : 6, Goal : 9, Loss : 19, Goal_Different: -10, Score : 9},
+	{Name:'그로이터 퓌르트',Round : 13,Win : 0,Draw : 1, Lose : 12, Goal : 11, Loss : 39, Goal_Different: -28, Score : 1},
+];
+bundesliga_json.sort();
+
+bundesliga_json.sort(function(a, b) {
+         if(a.Score > b.Score)
+         {
+           return -1; // 리턴하는 값이 0보다 작은 경우 a가 b보다 앞.
+         }
+         else if(a.Score < b.Score)
+         {
+          return 1; // 리턴하는 값이 0보다 크면 b가 a보다 앞으로 옴.
+         }
+         else {
+           if(a.Goal_Different > b.Goal_Different)
+           {
+             return -1;
+           }
+           else if(a.Goal_Different < b.Goal_Different)
+           {
+             return 1;
+           }
+           else{
+             if(a.Goal > b.Goal)
+						 {
+							 return -1;
+						 }
+						 else if (a.Goal < b.Goal)
+						 {
+							 return 1;
+						 }
+						 else {
+						 	{
+								return 0;
+							}
+						 }
+           }
+         }
+});
+
+
+var row = new Array(19);
+
+for(var i = 0; i < row; i++)
+{
+	row[i] = new Array(9);
+}
+
+
+
+
+var i =0;
+var z= 1;
+var x = 0;
+
+function add_row()
+{
+	if(bundesliga_table_load == true)
+	{
+		 return ;
+	}
+	else {
+		bundesliga_table_load = true;
+		var bundesliga = new Array(19);
+		var col = 9;
+
+		var myTbody = document.getElementById('add_table');
+		var row_add = myTbody.insertRow(myTbody.rows.length);
+		for(var i=0; i<row; i++)
+		{
+				      bundesliga[i] = new Array(9);
+		}
+
+		 for(var i=0; i<18; i++)
+		 {
+				 bundesliga[i] = Object.values(bundesliga_json[i]);
+		 }
+
+		 for(var i = 0; i < 18; i++)
+	 	 {
+			  var row = myTbody.insertRow(i);
+			  for(var j= 0; j < 9; j++)
+				{
+					 var cell = row.insertCell(j);
+					 cell.innerHTML = bundesliga[i][j];
+				}
+	 	 }
+	}
+}
+</script>
+
+<input type = 'button' value = '0' onclick ="add_row();">
+
+<table id = 'table_container' border = 1px; width = 100%;>
+<th class = 'th_style'>팀</th>
+<th class = 'th_style'>경기 수</th>
+<th class = 'th_style'>승</th>
+<th class = 'th_style'>무</th>
+<th class = 'th_style'>패</th>
+<th class = 'th_style'>득점</th>
+<th class = 'th_style'>실점</th>
+<th class = 'th_style'>골득실</th>
+<th class = 'th_style'>승점</th>
+<tbody id = 'add_table' width = 300px;>
+
+</tbody>
+</table>
+
+
+</body>
+</html>
